@@ -8191,8 +8191,8 @@ h1, h2, h3, h4, h5,
       top: 0;
       padding-top: 0;
       padding-bottom: 0;
-      padding-left: 15px;
-      padding-right: 15px; } }
+      padding-left: 20px;
+      padding-right: 20px; } }
   .ftco-navbar-light .container {
     width: 1110px;
     margin: 0 auto;
@@ -8798,7 +8798,8 @@ h1, h2, h3, h4, h5,
       .ftco-about ul.about-info li span:first-child {
         font-weight: 600;
         color: #fff;
-        width: 130px; }
+        width: 130px
+        ; }
 
 .ftco-about .counter-wrap .text p {
   font-size: 20px; }
@@ -8886,9 +8887,9 @@ h1, h2, h3, h4, h5,
 
 .progress-wrap {
   width: 100%;
-  margin-bottom: 30px; }
+  margin-bottom: 25px; }
   .progress-wrap h3 {
-    font-size: 20px;
+    font-size: 16px;
     margin-bottom: 10px;
     font-weight: 500; }
 
