@@ -9704,3 +9704,30 @@ textarea.form-control {
   100% {
     stroke-dasharray: 89, 200;
     stroke-dashoffset: -136px; } }
+
+    /* --- MOBILE LAYOUT FIXES (Lines added for Pushkar Portfolio) --- */
+
+@media (max-width: 768px) {
+    /* Line Fix: Ensures text doesn't touch screen edges */
+    .container {
+        padding-left: 25px !important;
+        padding-right: 25px !important;
+    }
+
+    /* Line Fix: Prevents horizontal scrolling issues */
+    .row {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    /* Line Fix: Centers the 'About' section info on mobile */
+    .about-info {
+        padding: 0 !important;
+        text-align: left;
+    }
+
+    /* Line Fix: Makes the skills bars easier to read on small screens */
+    .progress-wrap {
+        margin-bottom: 20px !important;
+    }
+}
