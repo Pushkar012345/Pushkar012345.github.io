@@ -1,703 +1,1277 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-	<title>Pushkar Pawar Portfolio</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Pushkar Pawar — Full Stack Developer</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Pushkar Pawar — Full Stack Web Developer, MERN Stack, AI integrations, Pune India">
 
-	<link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+  <style>
+    /* ── GOOGLE FONTS (loaded inline so it works locally too) ── */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 
-	<link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
-	<link rel="stylesheet" href="css/animate.css">
+    /* ════════════════════════════════════════
+       CSS RESET & VARIABLES
+    ════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-	<link rel="stylesheet" href="css/owl.carousel.min.css">
-	<link rel="stylesheet" href="css/owl.theme.default.min.css">
-	<link rel="stylesheet" href="css/magnific-popup.css">
+    :root {
+      --bg:        #080b12;
+      --surface:   #0d1117;
+      --surface2:  #161b26;
+      --surface3:  #1e2535;
+      --border:    rgba(255,255,255,0.08);
+      --border2:   rgba(255,255,255,0.12);
+      --accent:    #6366f1;
+      --accent-h:  #818cf8;
+      --teal:      #2dd4bf;
+      --yellow:    #fbbf24;
+      --text:      #e2e8f0;
+      --muted:     #64748b;
+      --muted2:    #94a3b8;
+      --font-head: 'Space Grotesk', 'Segoe UI', system-ui, sans-serif;
+      --font-body: 'Inter', 'Segoe UI', system-ui, sans-serif;
+      --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+      --radius:    12px;
+      --shadow:    0 4px 24px rgba(0,0,0,0.4);
+    }
 
-	<link rel="stylesheet" href="css/aos.css">
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
 
-	<link rel="stylesheet" href="css/ionicons.min.css">
+    /* ════════════════════════════════════════
+       NAVBAR
+    ════════════════════════════════════════ */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 5vw;
+      background: rgba(8,11,18,0.88);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      transition: height 0.3s;
+    }
+    .nav.shrunk { height: 56px; }
 
-	<link rel="stylesheet" href="css/flaticon.css">
-	<link rel="stylesheet" href="css/icomoon.css">
-	<link rel="stylesheet" href="css/style.css">
+    .nav-logo {
+      font-family: var(--font-head);
+      font-size: 1.15rem;
+      font-weight: 700;
+      background: linear-gradient(120deg, #a5b4fc, var(--teal));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.01em;
+    }
 
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+    .nav-links a {
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted2);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links .nav-cta {
+      padding: 0.45rem 1.1rem;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 7px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: none;
+      letter-spacing: 0;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .nav-links .nav-cta:hover { background: var(--accent-h); transform: translateY(-1px); color: #fff; }
 
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+    }
+    .hamburger span {
+      display: block;
+      width: 22px; height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
 
-	<style>
-		/*======================================
-//--//-->   ABOUT
-======================================*/
+    .mob-menu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      z-index: 99;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+    }
+    .mob-menu.open { display: flex; }
+    .mob-menu a {
+      font-family: var(--font-head);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .mob-menu a:hover { color: var(--accent-h); }
+    .mob-close {
+      position: absolute;
+      top: 1.5rem; right: 5vw;
+      font-size: 1.8rem;
+      cursor: pointer;
+      color: var(--muted2);
+      background: none;
+      border: none;
+    }
 
-		.about-mf .box-shadow-full {
-			padding-top: 4rem;
-			padding-bottom: 4rem;
-		}
+    /* ════════════════════════════════════════
+       HERO
+    ════════════════════════════════════════ */
+    #home {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 5rem 5vw 4rem;
+      position: relative;
+      overflow: hidden;
+    }
 
-		.about-mf .about-img {
-			margin-bottom: 2rem;
-		}
+    /* animated gradient orbs */
+    #home::before, #home::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    #home::before {
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(99,102,241,0.14) 0%, transparent 70%);
+      top: -150px; right: -100px;
+    }
+    #home::after {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(45,212,191,0.08) 0%, transparent 70%);
+      bottom: -100px; left: -50px;
+    }
 
-		.about-mf .about-img img {
-			margin-left: 10px;
-		}
+    .hero-inner {
+      max-width: 800px;
+      position: relative;
+      z-index: 1;
+    }
 
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border: 1px solid rgba(45,212,191,0.25);
+      border-radius: 100px;
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+      color: var(--teal);
+      background: rgba(45,212,191,0.05);
+      margin-bottom: 2rem;
+    }
+    .hero-badge .dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--teal);
+      animation: blink 2s ease-in-out infinite;
+    }
 
-		.skill-mf .progress {
-			/* background-color: #cde1f8; */
-			margin: .5rem 0 1.2rem 0;
-			border-radius: 0;
-			height: .7rem;
-		}
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
 
-		.skill-mf .progress .progress-bar {
-			height: .7rem;
-			background-color: #ffbd39;
-		}
+    .hero-name {
+      font-family: var(--font-head);
+      font-size: clamp(3.2rem, 8vw, 6.5rem);
+      font-weight: 800;
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      background: linear-gradient(160deg, #fff 40%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+    }
 
+    .hero-role {
+      font-family: var(--font-mono);
+      font-size: clamp(0.95rem, 2.2vw, 1.25rem);
+      color: var(--accent-h);
+      margin-bottom: 1.5rem;
+      min-height: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .cursor {
+      display: inline-block;
+      width: 2px; height: 1.1em;
+      background: var(--accent-h);
+      animation: blink 1s step-end infinite;
+    }
 
-		/* Animation styles */
-		#typing-animation {
-			position: relative;
-			font-size: 24px;
-			font-weight: bold;
-			color: rgb(255, 255, 255);
-			overflow: hidden;
-			white-space: normal;
-			animation: typing 3s steps(20, end) infinite;
-		}
+    .hero-desc {
+      font-size: 1.05rem;
+      color: var(--muted2);
+      max-width: 560px;
+      line-height: 1.85;
+      margin-bottom: 2.5rem;
+    }
 
-		#typing-animation:before {
-			content: "";
-			/* position: absolute; */
-			top: 0;
-			left: 0;
-			width: 0;
-			height: 100%;
-			background-color: #ccc;
-			animation: typing-cursor 0.5s ease-in-out infinite;
-		}
+    .hero-btns {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 4rem;
+    }
 
-		@keyframes typing {
-			from {
-				width: 0;
-			}
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0.78rem 1.8rem;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 9px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+      border: none;
+      cursor: pointer;
+    }
+    .btn-primary:hover {
+      background: var(--accent-h);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(99,102,241,0.35);
+    }
 
-			to {
-				width: 100%;
-			}
-		}
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0.78rem 1.8rem;
+      border: 1px solid var(--border2);
+      color: var(--text);
+      border-radius: 9px;
+      font-weight: 500;
+      font-size: 0.9rem;
+      transition: border-color 0.2s, color 0.2s, transform 0.2s;
+    }
+    .btn-ghost:hover {
+      border-color: var(--accent-h);
+      color: var(--accent-h);
+      transform: translateY(-2px);
+    }
 
-		@keyframes typing-cursor {
-			from {
-				width: 5px;
-			}
+    .hero-stats {
+      display: flex;
+      gap: 3rem;
+      flex-wrap: wrap;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+    .stat { display: flex; flex-direction: column; }
+    .stat-n {
+      font-family: var(--font-head);
+      font-size: 1.9rem;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1;
+    }
+    .stat-l {
+      font-size: 0.76rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin-top: 4px;
+    }
 
-			to {
-				width: 0;
-			}
-		}
+    /* ════════════════════════════════════════
+       SECTION COMMONS
+    ════════════════════════════════════════ */
+    section { padding: 6rem 5vw; }
+    .wrap { max-width: 1100px; margin: 0 auto; }
+    .sec-tag {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--accent-h);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+    .sec-title {
+      font-family: var(--font-head);
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 0.9rem;
+    }
+    .sec-sub {
+      color: var(--muted2);
+      font-size: 0.97rem;
+      max-width: 520px;
+      line-height: 1.8;
+      margin-bottom: 3.5rem;
+    }
 
+    /* ════════════════════════════════════════
+       ABOUT
+    ════════════════════════════════════════ */
+    #about { background: var(--surface); }
 
-		/* project image zoom effect */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
 
-		.zoom-effect {
-			overflow: hidden;
-			transition: transform 0.3s ease-out;
-		}
+    .profile-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      position: sticky;
+      top: 80px;
+    }
+    .avatar {
+      width: 88px; height: 88px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--teal));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-head);
+      font-size: 1.7rem;
+      font-weight: 800;
+      color: #fff;
+      margin: 0 auto 1rem;
+    }
+    .profile-name {
+      text-align: center;
+      font-family: var(--font-head);
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .profile-tag {
+      text-align: center;
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      color: var(--accent-h);
+      margin-bottom: 1.5rem;
+    }
+    .profile-info {
+      border-top: 1px solid var(--border);
+      padding-top: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+    .pi-row { display: flex; flex-direction: column; gap: 2px; }
+    .pi-key {
+      font-size: 0.67rem;
+      font-family: var(--font-mono);
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .pi-val { font-size: 0.86rem; font-weight: 500; }
+    .profile-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-top: 1.25rem;
+    }
+    .pl-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 0.55rem;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      font-size: 0.83rem;
+      font-weight: 500;
+      color: var(--text);
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .pl-btn:hover { border-color: var(--accent-h); color: var(--accent-h); }
 
-		.zoom-effect:hover {
-			transform: scale(1.1);
-		}
-	</style>
+    .about-body h3 {
+      font-family: var(--font-head);
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+    .about-body p {
+      color: var(--muted2);
+      line-height: 1.9;
+      margin-bottom: 1.4rem;
+      font-size: 0.96rem;
+    }
 
+    .skill-group { margin-bottom: 1.8rem; }
+    .skill-label {
+      font-size: 0.73rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--muted);
+      margin-bottom: 0.7rem;
+    }
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .chip {
+      padding: 0.3rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-family: var(--font-mono);
+      border: 1px solid var(--border);
+      background: var(--surface3);
+      color: var(--muted2);
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .chip:hover { border-color: var(--border2); color: var(--text); }
+    .chip.v  { border-color: rgba(99,102,241,0.35); color: var(--accent-h); background: rgba(99,102,241,0.06); }
+    .chip.t  { border-color: rgba(45,212,191,0.35); color: var(--teal);     background: rgba(45,212,191,0.06); }
+    .chip.y  { border-color: rgba(251,191,36,0.35); color: var(--yellow);   background: rgba(251,191,36,0.06); }
 
+    /* ════════════════════════════════════════
+       EXPERIENCE
+    ════════════════════════════════════════ */
+    #experience { background: var(--bg); }
+
+    .tl { position: relative; padding-left: 1.8rem; }
+    .tl::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 6px; bottom: 0;
+      width: 1px;
+      background: var(--border);
+    }
+    .tl-item {
+      position: relative;
+      margin-bottom: 3rem;
+    }
+    .tl-item::before {
+      content: '';
+      position: absolute;
+      left: -2.15rem;
+      top: 6px;
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 2px solid var(--bg);
+      box-shadow: 0 0 0 3px rgba(99,102,241,0.25);
+    }
+
+    .tl-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 0.4rem;
+    }
+    .tl-role {
+      font-family: var(--font-head);
+      font-size: 1.08rem;
+      font-weight: 700;
+    }
+    .tl-tag {
+      padding: 3px 11px;
+      border-radius: 100px;
+      font-size: 0.72rem;
+      font-family: var(--font-mono);
+      font-weight: 500;
+    }
+    .tl-tag.current { background: rgba(99,102,241,0.12); color: var(--accent-h); border: 1px solid rgba(99,102,241,0.25); }
+    .tl-tag.intern  { background: rgba(45,212,191,0.09); color: var(--teal);     border: 1px solid rgba(45,212,191,0.22); }
+    .tl-co  { font-size: 0.87rem; color: var(--teal); font-weight: 500; margin-bottom: 4px; }
+    .tl-dt  { font-size: 0.76rem; font-family: var(--font-mono); color: var(--muted); margin-bottom: 0.9rem; }
+    .tl-pts { display: flex; flex-direction: column; gap: 0.5rem; }
+    .tl-pt {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 0.89rem;
+      color: var(--muted2);
+      line-height: 1.65;
+    }
+    .tl-pt::before {
+      content: '▸';
+      color: var(--accent-h);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* ════════════════════════════════════════
+       PROJECTS
+    ════════════════════════════════════════ */
+    #projects { background: var(--surface); }
+
+    .proj-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.4rem;
+    }
+
+    .proj-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.8rem;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+    .proj-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--teal));
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+    .proj-card:hover {
+      border-color: rgba(99,102,241,0.3);
+      transform: translateY(-5px);
+      box-shadow: 0 20px 48px rgba(0,0,0,0.35);
+    }
+    .proj-card:hover::after { opacity: 1; }
+
+    .proj-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+    }
+    .proj-icon {
+      width: 44px; height: 44px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.35rem;
+    }
+    .proj-actions { display: flex; gap: 8px; }
+    .proj-btn {
+      width: 32px; height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      font-size: 0.85rem;
+      color: var(--muted);
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .proj-btn:hover { border-color: var(--accent-h); color: var(--accent-h); }
+
+    .proj-title {
+      font-family: var(--font-head);
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.65rem;
+    }
+    .proj-desc {
+      font-size: 0.86rem;
+      color: var(--muted2);
+      line-height: 1.72;
+      flex-grow: 1;
+      margin-bottom: 1.3rem;
+    }
+    .proj-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tc {
+      padding: 3px 9px;
+      border-radius: 5px;
+      font-size: 0.7rem;
+      font-family: var(--font-mono);
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* more card */
+    .proj-more {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      border-style: dashed !important;
+      min-height: 220px;
+      gap: 0.5rem;
+    }
+    .proj-more .arrow { font-size: 2rem; color: var(--muted); }
+    .proj-more .proj-title { margin-bottom: 0.25rem; }
+    .proj-more .proj-desc { font-size: 0.8rem; margin-bottom: 1rem; }
+
+    /* ════════════════════════════════════════
+       EDUCATION
+    ════════════════════════════════════════ */
+    #education { background: var(--bg); }
+
+    .edu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 1.2rem;
+    }
+    .edu-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.6rem;
+      transition: border-color 0.2s;
+    }
+    .edu-card:hover { border-color: rgba(99,102,241,0.3); }
+    .edu-yr {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--accent-h);
+      margin-bottom: 0.5rem;
+    }
+    .edu-deg { font-weight: 700; font-size: 0.97rem; margin-bottom: 4px; }
+    .edu-school { font-size: 0.83rem; color: var(--muted2); margin-bottom: 6px; }
+    .edu-grade { font-family: var(--font-mono); font-size: 0.78rem; color: var(--yellow); }
+
+    /* ════════════════════════════════════════
+       CONTACT
+    ════════════════════════════════════════ */
+    #contact { background: var(--surface); }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    .c-item {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      margin-bottom: 1.4rem;
+    }
+    .c-icon {
+      width: 42px; height: 42px;
+      flex-shrink: 0;
+      border-radius: 10px;
+      background: rgba(99,102,241,0.1);
+      border: 1px solid rgba(99,102,241,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+    }
+    .c-lbl {
+      font-size: 0.7rem;
+      font-family: var(--font-mono);
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 3px;
+    }
+    .c-val { font-weight: 500; font-size: 0.92rem; }
+    .c-val a:hover { color: var(--accent-h); }
+
+    .social-row {
+      display: flex;
+      gap: 0.7rem;
+      flex-wrap: wrap;
+      margin-top: 1.8rem;
+    }
+    .soc-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0.55rem 1.1rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text);
+      transition: border-color 0.2s, color 0.2s, transform 0.2s;
+    }
+    .soc-btn:hover { border-color: var(--accent-h); color: var(--accent-h); transform: translateY(-2px); }
+
+    .cta-box {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2.5rem;
+    }
+    .cta-box h3 {
+      font-family: var(--font-head);
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 0.7rem;
+    }
+    .cta-box p {
+      color: var(--muted2);
+      font-size: 0.9rem;
+      line-height: 1.75;
+      margin-bottom: 1.5rem;
+    }
+    .cta-stack { display: flex; flex-direction: column; gap: 0.75rem; }
+
+    /* ════════════════════════════════════════
+       FOOTER
+    ════════════════════════════════════════ */
+    footer {
+      padding: 1.8rem 5vw;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+    }
+
+    /* ════════════════════════════════════════
+       SCROLLBAR
+    ════════════════════════════════════════ */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 3px; }
+
+    /* ════════════════════════════════════════
+       RESPONSIVE
+    ════════════════════════════════════════ */
+    @media (max-width: 860px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .about-grid { grid-template-columns: 1fr; }
+      .profile-card { position: static; }
+      .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+      section { padding: 5rem 5vw; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+    @media (max-width: 560px) {
+      .hero-stats { gap: 1.5rem; }
+      .proj-grid { grid-template-columns: 1fr; }
+      .tl-head { flex-direction: column; }
+    }
+
+    /* ════════════════════════════════════════
+       FADE-IN ANIMATION
+    ════════════════════════════════════════ */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
 </head>
-
-<body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
-
-
-	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar ftco-navbar-light site-navbar-target" id="ftco-navbar">
-		<div class="container">
-			<a class="navbar-brand" href="index.html">Pushkar Pawar</a>
-			<button class="navbar-toggler js-fh5co-nav-toggle fh5co-nav-toggle" type="button" data-toggle="collapse"
-				data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="oi oi-menu"></span> Menu
-			</button>
-
-			<div class="collapse navbar-collapse" id="ftco-nav">
-				<ul class="navbar-nav nav ml-auto">
-					<li class="nav-item"><a href="#home-section" class="nav-link"><span>Home</span></a></li>
-					<li class="nav-item"><a href="#about-section" class="nav-link"><span>About</span></a></li>
-					<li class="nav-item"><a href="#resume-section" class="nav-link"><span>Resume</span></a></li>
-					<li class="nav-item"><a href="#project-section" class="nav-link"><span>Projects</span></a></li>
-					<li class="nav-item"><a href="#contact-section" class="nav-link"><span>Contact</span></a></li>
-				</ul>
-			</div>
-		</div>
-	</nav>
-	<section id="home-section" class="hero">
-		<div class="home-slider  owl-carousel">
-			<div class="slider-item ">
-				<div class="overlay"></div>
-				<div class="container">
-					<div class="row d-md-flex no-gutters slider-text align-items-end justify-content-end"
-						data-scrollax-parent="true">
-						<div class="one-third js-fullheight order-md-last img"
-							style="background-image:url(images/image2.png);">
-							<div class="overlay"></div>
-						</div>
-						<div class="one-forth d-flex  align-items-center ftco-animate"
-							data-scrollax=" properties: { translateY: '70%' }">
-							<div class="text">
-								<span class="subheading">Hello!</span>
-								<h1 class="mb-4 mt-3">I'm <span>Pushkar Pawar</span></h1>
-
-								<!-- Element to contain animated typing -->
-								<span id="typing-animation"></span>
-
-								<script>
-
-									// Initialize the typing animation
-									const typingAnimationElement = document.getElementById('typing-animation');
-
-									// Create an array of typing text
-									const typingTexts = [
-										'Full Stack WEB Developer  ',
-										'Mobile Developer',
-										'AI /ML Enthusiast',
-									];
-
-									// Create a function to display the typing animation for a given text
-									function playTypingAnimation(text) {
-										// Loop through each character and add it to the element
-										for (let i = 0; i < text.length; i++) {
-											setTimeout(() => {
-												typingAnimationElement.textContent += text[i];
-											}, i * 200); // Increase the delay to slow down the typing animation
-										}
-
-										// Once the animation is complete, reset the text and start over
-										setTimeout(() => {
-											typingAnimationElement.textContent = '';
-											playTypingAnimation(typingTexts[(typingTexts.indexOf(text) + 1) % typingTexts.length]);
-										}, text.length * 200);
-									}
-
-									// Start the typing animation loop
-									playTypingAnimation(typingTexts[0]);
-
-								</script>
-
-								<br>
-								<br>
-								<h2>Full Stack Web & Mobile Developer</h2>
-								<p>
-									<a href="https://www.linkedin.com/in/pushkar-pawar-30895825b/"
-										class="btn btn-primary py-3 px-4">LinkedIn</a>
-									<a href="https://github.com/Pushkar012345"
-										class="btn btn-white btn-outline-white py-3 px-4">My works</a>
-								</p>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-
-
-
-	<section class="ftco-about img ftco-section ftco-no-pb" id="about-section">
-		<div class="container">
-			<div class="row">
-				<div class="row d-flex align-items-stretch">
-					<!-- <div class="row d-flex"> -->
-					<div class="col-md-6 col-lg-5 d-flex">
-						<div class="img-about img d-flex align-items-stretch">
-							<div class="overlay">
-								<div class="row">
-									<div class="col-sm-6 col-md-5">
-										<div class="about-img">
-											<img src="images/bg_2.png" class="img-fluid rounded b-shadow-a" alt="">
-										</div>
-									</div>
-									<!-- Details next to profile image -->
-									<div class="col-sm-6 col-md-7">
-										<div class="about-info">
-											<p><span class="title-s">Name: </span> <span>Pushkar Pawar</span></p>
-											<p><span class="title-s">Job Role: </span> <span>Full Stack Web & Mobile
-													Developer</span></p>
-											<p><span class="title-s">Experience: </span> <span>8 Months+</span></p>
-											<p><span class="title-s">Address: </span> <span>Pune , India</span></p>
-										</div>
-									</div>
-								</div>
-
-								<div class="skill-mf">
-									<p class="title-s">Skills</p>
-									<span>MERN</span> <span class="pull-right">95%</span>
-									<div class="progress">
-										<div class="progress-bar" role="progressbar" style="width: 95%;"
-											aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
-									</div>
-
-									<span>React Native</span> <span class="pull-right">85%</span>
-									<div class="progress">
-										<div class="progress-bar" role="progressbar" style="width: 85%"
-											aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
-									</div>
-
-									<span>AI/ML</span> <span class="pull-right">90%</span>
-									<div class="progress">
-										<div class="progress-bar" role="progressbar" style="width: 90%"
-											aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
-									</div>
-
-									<!-- <span>Statistical Analysis</span> <span class="pull-right">85%</span>
-									<div class="progress">
-										<div class="progress-bar" role="progressbar" style="width: 85%" aria-valuenow="85" aria-valuemin="0"
-											aria-valuemax="100"></div>
-									</div>
-									
-									<span>Machine Learning</span> <span class="pull-right">80%</span>
-									<div class="progress">
-										<div class="progress-bar" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0"
-											aria-valuemax="100"></div>
-									</div> -->
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-md-6 col-lg-7 pl-lg-5 pb-5">
-						<div class="row justify-content-start pb-3">
-							<div class="col-md-12 heading-section ftco-animate">
-
-								<h1 class="big">About</h1>
-								<h2 class="mb-4">About Me</h2>
-
-								<p>
-									A results-driven Full Stack Developer with hands-on experience in building scalable,
-									end-to-end web applications.
-									Proficient in modern frontend technologies like React.js and backend development
-									using Node.js, Express.js, and RESTful APIs.
-									Strong foundation in database design, authentication, and performance optimization,
-									with exposure to AI/ML and LLM integrations.
-									Demonstrated ability to deliver production-ready solutions, collaborate effectively
-									in teams, and continuously learn new technologies.
-								</p>
-
-								<ul class="about-info mt-4 px-md-0 px-2">
-									<li class="d-flex">
-										<span>Languages:</span>
-										<span>JavaScript (ES6+), C++, Java, SQL, HTML5, CSS3</span>
-									</li>
-
-									<li class="d-flex">
-										<span>Frontend:</span>
-										<span>React.js, Redux, React Router, Tailwind CSS, Bootstrap, Axios, Responsive
-											UI</span>
-									</li>
-
-									<li class="d-flex">
-										<span>Backend:</span>
-										<span>Node.js, Express.js, REST APIs, JWT Authentication, CRUD, MVC
-											Architecture</span>
-									</li>
-
-									<li class="d-flex">
-										<span>Databases:</span>
-										<span>MongoDB, Mongoose, MongoDB Atlas, MySQL, DB Design, Query
-											Optimization</span>
-									</li>
-
-									<li class="d-flex">
-										<span>Tools & Platforms:</span>
-										<span>Git, GitHub, VS Code, Postman, Docker, Firebase, Netlify, Render, CI/CD,
-											Railway, Plesk</span>
-									</li>
-
-									<li class="d-flex">
-										<span>AI / ML:</span>
-										<span>LLM Integration (OpenAI, Gemini), Prompt Engineering, Scikit-learn, NumPy,
-											Pandas</span>
-									</li>
-
-									<li class="d-flex">
-										<span>Testing & QA:</span>
-										<span>Manual Testing, Test Cases, Bug Reporting, API Testing (Postman), SDLC,
-											STLC</span>
-									</li>
-								</ul>
-
-							</div>
-						</div>
-
-
-						<div class="counter-wrap ftco-animate d-flex mt-md-3">
-							<div class="text">
-								<p class="mb-4">
-									<span class="number" data-number="10">0</span> <span>+</span>
-									<span>&nbsp; Projects completed</span>
-								</p>
-								<p><a href="https://www.linkedin.com/in/pushkar-pawar-30895825b/"
-										class="btn btn-primary py-3 px-3">LinkedIn</a></p>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-
-
-
-
-	<section class="ftco-section ftco-no-pb" id="resume-section">
-		<div class="container">
-			<div class="row justify-content-center pb-5">
-				<div class="col-md-10 heading-section text-center ftco-animate">
-					<h1 class="big big-2">Resume</h1>
-					<h2 class="mb-4">Resume</h2>
-					<p>
-						A passionate Full Stack Developer experienced in developing responsive, scalable web
-						applications.
-						Skilled in React.js, Node.js, REST APIs, and database management, with growing expertise in
-						AI/ML integrations.
-						Focused on writing clean code, solving real-world problems, and building impactful digital
-						solutions.
-					</p>
-
-				</div>
-			</div>
-
-			<div class="row">
-				<h1 class="big-4">Experience</h1>
-				<div class="underline"></div>
-			</div>
-			<br>
-
-			<div class="row">
-				<div class="col-md-6">
-					<div class="resume-wrap ftco-animate">
-						<span class="date">2026-Present</span>
-						<h2>Full Stack Web Developer</h2>
-						<span class="position">IT WorldTech</span>
-						<p class="mt-4">IT WorldTech is a leading IT solutions provider, delivering innovative software
-							solutions to clients worldwide.
-						<ul>
-							<li>Making Full Stack Web Applications using React.js, Node.js, Express.js, MongoDB for
-								company website
-							<li>Helped in hiring candidates & managing social media sites </li>
-
-						</ul>
-						</p>
-					</div>
-
-				</div>
-
-				<div class="col-md-6">
-					<div class="resume-wrap ftco-animate">
-						<span class="date">2025-2026</span>
-						<h2>Software Engineering Intern</h2>
-						<span class="position">Syngenta</span>
-						<p class="mt-4">Syngenta is a global agriculture company that helps farmers grow safe and
-							sustainable food.
-						<ul>
-							<li> Implemented scalable RESTful APIs using Node.js & Express.js, improving data retrieval
-								efficiency
-								and reducing API response time by 25%.</li>
-							<li> Developed reusable and optimized React.js components, enhancing UI performance and
-								reducing
-								unnecessary re-renders by 15–20%.</li>
-							<li>Collaborated with senior engineers to debug backend logic and optimize request/response
-								flows, reducing
-								API-level bugs by 30%</li>
-						</ul>
-						</p>
-					</div>
-
-				</div>
-			</div>
-
-			<br>
-			<br>
-
-			<div class="row">
-				<h1 class="big-4">Education</h1>
-				<div class="underline"></div>
-			</div>
-			<br>
-
-			<div class="row">
-				<div class="col-md-6">
-					<div class="resume-wrap ftco-animate">
-						<span class="date">2021-2025</span>
-						<h2>B.Tech- Information Technology</h2>
-						<span class="position">VIT, Pune (Formerly VIIT)</span>
-						<p class="mt-4">CGPA:8.37/ 10</p>
-					</div>
-				</div>
-
-				<div class="col-md-6">
-					<div class="resume-wrap ftco-animate">
-						<span class="date">2019-2021</span>
-						<h2>HSC- XII th</h2>
-						<span class="position">Dnyandeep Vidya Mandir, Ratnagiri</span>
-						<p class="mt-4">Percentage: 94.33 %</p>
-					</div>
-				</div>
-
-				<div class="col-md-6">
-					<div class="resume-wrap ftco-animate">
-						<span class="date">2017-2019</span>
-						<h2>SSC- X th</h2>
-						<span class="position">Navbharat Highschool, Ratnagiri</span>
-						<p class="mt-4">Percentage: 90.20 %</p>
-					</div>
-				</div>
-			</div>
-
-			<div class="row justify-content-center mt-5">
-				<div class="col-md-6 text-center ftco-animate">
-					<p><a href="https://drive.google.com/file/d/1HUcLJ-JAPvq-wGxTk5s13_xu6_W49x3P/view?usp=sharing"
-							class="btn btn-primary py-4 px-5">Download CV</a></p>
-				</div>
-			</div>
-		</div>
-	</section>
-
-
-
-	<section class="ftco-section" id="project-section">
-		<div class="container">
-			<div class="row justify-content-center mb-5 pb-5">
-				<div class="col-md-7 heading-section text-center ftco-animate">
-					<h1 class="big big-2">Projects</h1>
-					<h2 class="mb-4">Projects</h2>
-					<p>Below are the Personal Projects on Full Stack Web Development(MERN).</p>
-				</div>
-			</div>
-			<div class="row d-flex">
-				<div class="col-md-4 d-flex ftco-animate">
-					<div class="blog-entry justify-content-end">
-						<a href="https://github.com/Pushkar012345/kokan-Restaurant-Website" class="block-20 zoom-effect"
-							style="background-image: url('images/Proj-1.jpg');">
-						</a>
-						<div class="text mt-3 float-right d-block">
-							<h3 class="heading"><a
-									href="https://github.com/Pushkar012345/kokan-Restaurant-Website">Kokan Restaurant
-									Website</a></h3>
-							<p>Developed Full Stack Restaurant Website using MERN Stack.</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4 d-flex ftco-animate">
-					<div class="blog-entry justify-content-end">
-						<a href="https://github.com/Pushkar012345/MI_ClONE" class="block-20 zoom-effect"
-							style="background-image: url('images/Proj-2.jpg');">
-						</a>
-						<div class="text mt-3 float-right d-block">
-
-							<h3 class="heading"><a href="https://github.com/Pushkar012345/MI_ClONE">MI Clone Website</a>
-							</h3>
-							<p>Developed Replica of MI Website using HTML, CSS, and JavaScript & React</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4 d-flex ftco-animate">
-					<div class="blog-entry">
-						<a href="https://github.com/Pushkar012345/Portfolio-website" class="block-20 zoom-effect"
-							style="background-image: url('images/Proj-3.jpg');">
-						</a>
-						<div class="text mt-3 float-right d-block">
-
-							<h3 class="heading"><a href="https://github.com/Pushkar012345/Portfolio-website">Personal
-									Portfolio Website</a></h3>
-							<p>Created Peronal Portfoio Website with Desitinguished features</p>
-						</div>
-					</div>
-				</div>
-			</div>
-			<br>
-			<!-- added justify-content-center to center align the last two projects -->
-
-		</div>
-	</section>
-
-	<section class="ftco-section ftco-no-pt ftco-no-pb ftco-counter img" id="section-counter">
-		<div class="container">
-			<div class="row d-md-flex align-items-center">
-				<div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
-					<div class="block-18">
-						<div class="text">
-							<strong class="number" data-number="5">0</strong>
-							<span>Achievements</span>
-						</div>
-					</div>
-				</div>
-				<div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
-					<div class="block-18">
-						<div class="text">
-							<strong class="number" data-number="10">0</strong>
-							<span>Projects</span>
-						</div>
-					</div>
-				</div>
-				<div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
-					<div class="block-18">
-						<div class="text">
-							<strong class="number" data-number="10">10</strong>
-							<span>Courses Completed</span>
-						</div>
-					</div>
-				</div>
-				<div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
-					<div class="block-18">
-						<div class="text">
-							<strong class="number" data-number="20">0</strong>
-							<span>Tech Familiarity</span>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<div class="ftco-section ftco-hireme img margin-top" style="background-image: url(images/mountain.jpg)">
-			<!-- <div class="container"> -->
-			<div class="row justify-content-center">
-				<div class="col-md-7 ftco-animate text-center">
-					<h2>More projects on<span> Github </span> </h2>
-					<div class="heading">
-						<h4> I love to solve business problems &amp; uncover hidden data stories </h4>
-						<br>
-						<p><a href="https://github.com/Pushkar012345" class="btn btn-primary py-3 px-5">GitHub</a></p>
-					</div>
-				</div>
-			</div>
-			<!-- </div> -->
-		</div>
-	</section>
-
-
-
-	<section class="ftco-section contact-section ftco-no-pb" id="contact-section">
-		<div class="container">
-			<div class="row justify-content-center mb-5 pb-3">
-				<div class="col-md-7 heading-section text-center ftco-animate">
-					<h1 class="big big-2">Contact</h1>
-					<h2 class="mb-4">Contact Me</h2>
-					<p>Below are the details to reach out to me!</p>
-				</div>
-			</div>
-
-			<div class="row d-flex contact-info mb-5">
-				<div class="col-md-6 col-lg-3 d-flex ftco-animate">
-					<div class="align-self-stretch box p-4 text-center">
-						<div class="icon d-flex align-items-center justify-content-center">
-							<span class="icon-map-signs"></span>
-						</div>
-						<h3 class="mb-4">Address</h3>
-						<p>Pune, India</p>
-					</div>
-				</div>
-				<div class="col-md-6 col-lg-3 d-flex ftco-animate">
-					<div class="align-self-stretch box p-4 text-center">
-						<div class="icon d-flex align-items-center justify-content-center">
-							<span class="icon-phone2"></span>
-						</div>
-						<h3 class="mb-4">Contact Number</h3>
-						<p><a href="tel://0101010101">+91 8482939096</a></p>
-					</div>
-				</div>
-				<div class="col-md-6 col-lg-3 d-flex ftco-animate">
-					<div class="align-self-stretch box p-4 text-center">
-						<div class="icon d-flex align-items-center justify-content-center">
-							<span class="icon-paper-plane"></span>
-						</div>
-						<h3 class="mb-4">Email Address</h3>
-						<p><a href="mailto:info@yoursite.com">pushkarpawaroff@gmail.com</a></p>
-					</div>
-				</div>
-				<div class="col-md-6 col-lg-3 d-flex ftco-animate">
-					<div class="align-self-stretch box p-4 text-center">
-						<div class="icon d-flex align-items-center justify-content-center">
-							<span class="icon-globe"></span>
-						</div>
-						<h3 class="mb-4">Download Resume</h3>
-						<p><a
-								href="https://drive.google.com/file/d/1HUcLJ-JAPvq-wGxTk5s13_xu6_W49x3P/view?usp=sharin">resumelink</a>
-						</p>
-					</div>
-				</div>
-
-				<div class="container">
-					<br>
-					<br>
-					<div class="row justify-content-center">
-						<div class="col-md-7 ftco-animate text-center">
-							<h2>Have a<span> Question? </span> <a
-									href="https://www.linkedin.com/in/pushkar-pawar-30895825b/"
-									class="btn btn-primary py-3 px-5">Click Here</a> </h2>
-						</div>
-					</div>
-					<br>
-					<ul class="ftco-footer-social list-unstyled d-flex justify-content-center align-items-center mb-0">
-						<li class="ftco-animate normal-txt">Find me on </li>
-						<li class="ftco-animate"><a href="https://www.linkedin.com/in/pushkar-pawar-30895825b/"><span
-									class="icon-linkedin"></span></a></li>
-					</ul>
-					<br>
-				</div>
-			</div>
-	</section>
-
-
-
-
-	<footer class="ftco-footer ftco-section">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12 text-center">
-
-					<p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-						Copyright &copy;
-						<script>document.write(new Date().getFullYear());</script> All rights reserved | This Website
-						is made by <i class="icon-heart color-danger" aria-hidden="true"></i> by <a
-							href="https://colorlib.com" target="_blank">Pushkar </a>
-						<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-					</p>
-				</div>
-			</div>
-		</div>
-	</footer>
-
-
-	<!-- loader -->
-	<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
-			<circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
-			<circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
-				stroke="#F96D00" />
-		</svg></div>
-
-
-	<script src="js/jquery.min.js"></script>
-	<script src="js/jquery-migrate-3.0.1.min.js"></script>
-	<script src="js/popper.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/jquery.easing.1.3.js"></script>
-	<script src="js/jquery.waypoints.min.js"></script>
-	<script src="js/jquery.stellar.min.js"></script>
-	<script src="js/owl.carousel.min.js"></script>
-	<script src="js/jquery.magnific-popup.min.js"></script>
-	<script src="js/aos.js"></script>
-	<script src="js/jquery.animateNumber.min.js"></script>
-	<script src="js/scrollax.min.js"></script>
-
-	<script src="js/main.js"></script>
-
+<body>
+
+  <!-- ══ NAVBAR ══ -->
+  <nav class="nav" id="nav">
+    <a href="#home" class="nav-logo">Pushkar Pawar</a>
+    <div class="nav-links">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#education">Education</a>
+      <a href="#contact" class="nav-cta">Contact</a>
+    </div>
+    <button class="hamburger" id="hbg" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- ══ MOBILE MENU ══ -->
+  <div class="mob-menu" id="mobMenu">
+    <button class="mob-close" id="mobClose">✕</button>
+    <a href="#home"       onclick="closeMob()">Home</a>
+    <a href="#about"      onclick="closeMob()">About</a>
+    <a href="#experience" onclick="closeMob()">Experience</a>
+    <a href="#projects"   onclick="closeMob()">Projects</a>
+    <a href="#education"  onclick="closeMob()">Education</a>
+    <a href="#contact"    onclick="closeMob()">Contact</a>
+  </div>
+
+  <!-- ══ HERO ══ -->
+  <section id="home">
+    <div class="hero-inner">
+      <div class="hero-badge">
+        <span class="dot"></span>
+        Available for opportunities
+      </div>
+
+      <h1 class="hero-name">Pushkar<br>Pawar</h1>
+
+      <div class="hero-role">
+        <span id="typing"></span><span class="cursor"></span>
+      </div>
+
+      <p class="hero-desc">
+        Full Stack Developer with 1+ years building production-grade MERN/Next.js apps, integrating AI, payments, and real-time systems into secure, scalable platforms. Currently building at IT WorldTech.
+      </p>
+
+      <div class="hero-btns">
+        <a href="https://drive.google.com/file/d/15AdDJdfR9Ta8nacxIzHsAdpWShY-yjQk/view?usp=sharing"
+           class="btn-primary" target="_blank">↓ Download Resume</a>
+        <a href="#projects" class="btn-ghost">View Projects →</a>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-n">10+</span>
+          <span class="stat-l">Projects Built</span>
+        </div>
+        <div class="stat">
+          <span class="stat-n">1+</span>
+          <span class="stat-l">Years Exp.</span>
+        </div>
+        <div class="stat">
+          <span class="stat-n">20+</span>
+          <span class="stat-l">Technologies</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ ABOUT ══ -->
+  <section id="about">
+    <div class="wrap">
+      <div class="sec-tag">01 / About</div>
+      <h2 class="sec-title">Who I Am</h2>
+
+      <div class="about-grid">
+        <!-- Profile card -->
+        <div class="profile-card fade-up">
+          <div class="avatar">PP</div>
+          <div class="profile-name">Pushkar Pawar</div>
+          <div class="profile-tag">Full Stack Developer</div>
+          <div class="profile-info">
+            <div class="pi-row">
+              <span class="pi-key">Location</span>
+              <span class="pi-val">Pune, Maharashtra, India</span>
+            </div>
+            <div class="pi-row">
+              <span class="pi-key">Email</span>
+              <span class="pi-val">pushkarpawaroff@gmail.com</span>
+            </div>
+            <div class="pi-row">
+              <span class="pi-key">Phone</span>
+              <span class="pi-val">+91 8482939096</span>
+            </div>
+            <div class="pi-row">
+              <span class="pi-key">CGPA</span>
+              <span class="pi-val">8.37 / 10 — VIIT Pune</span>
+            </div>
+          </div>
+          <div class="profile-links">
+            <a href="https://www.linkedin.com/in/pushkar-pawar-30895825b/" class="pl-btn" target="_blank">
+              🔗 LinkedIn
+            </a>
+            <a href="https://github.com/Pushkar012345" class="pl-btn" target="_blank">
+              🐙 GitHub
+            </a>
+            <a href="https://pushkar012345.github.io/" class="pl-btn" target="_blank">
+              🌐 Portfolio
+            </a>
+            <a href="https://leetcode.com/u/pushkarpawar/" class="pl-btn" target="_blank">
+              💻 LeetCode
+            </a>
+          </div>
+        </div>
+
+        <!-- About text + skills -->
+        <div class="about-body fade-up">
+          <h3>Results-driven Full Stack Developer</h3>
+          <p>
+            I build scalable, end-to-end web applications with modern frontend technologies like React.js and Next.js, backed by Node.js, Express.js, and RESTful APIs. I have a strong foundation in authentication, payments, and real-time systems, with hands-on experience integrating AI via the Gemini and Groq LLaMA APIs.
+          </p>
+          <p>
+            Currently a Full Stack Web Developer at IT WorldTech, where I've shipped a live astrology platform on the Play Store with JWT auth, Stripe payments, real-time chat via Socket.io, and AI-powered PDF reports — alongside a serverless file-sharing platform built on Supabase and Cloudflare R2. Previously interned at Syngenta Group, where I resolved production-impacting bugs across MERN modules and shipped features for a React Native mobile app with 80%+ unit test coverage.
+          </p>
+
+          <div class="skill-group">
+            <div class="skill-label">Languages</div>
+            <div class="chips">
+              <span class="chip v">JavaScript</span>
+              <span class="chip v">TypeScript</span>
+            </div>
+          </div>
+
+          <div class="skill-group">
+            <div class="skill-label">Frontend</div>
+            <div class="chips">
+              <span class="chip v">React.js</span>
+              <span class="chip v">Next.js</span>
+              <span class="chip">Tailwind CSS</span>
+              <span class="chip">React Native</span>
+              <span class="chip">HTML</span>
+              <span class="chip">CSS</span>
+            </div>
+          </div>
+
+          <div class="skill-group">
+            <div class="skill-label">Backend</div>
+            <div class="chips">
+              <span class="chip t">Node.js</span>
+              <span class="chip t">Express.js</span>
+              <span class="chip">REST API</span>
+              <span class="chip">JWT</span>
+              <span class="chip">Prisma ORM</span>
+              <span class="chip">Socket.io</span>
+            </div>
+          </div>
+
+          <div class="skill-group">
+            <div class="skill-label">Database</div>
+            <div class="chips">
+              <span class="chip">MongoDB</span>
+              <span class="chip">PostgreSQL</span>
+              <span class="chip">Supabase</span>
+            </div>
+          </div>
+
+          <div class="skill-group">
+            <div class="skill-label">Cloud / Storage</div>
+            <div class="chips">
+              <span class="chip">Cloudflare R2</span>
+              <span class="chip">AWS (SigV4)</span>
+            </div>
+          </div>
+
+          <div class="skill-group">
+            <div class="skill-label">AI &amp; Integrations</div>
+            <div class="chips">
+              <span class="chip y">Gemini AI API</span>
+              <span class="chip y">Groq LLaMA</span>
+              <span class="chip">Stripe</span>
+              <span class="chip">OneSignal</span>
+              <span class="chip">Clerk</span>
+              <span class="chip">NextAuth.js</span>
+              <span class="chip">SMTP Integration</span>
+            </div>
+          </div>
+
+          <div class="skill-group">
+            <div class="skill-label">DevOps &amp; Tools</div>
+            <div class="chips">
+              <span class="chip">Git</span>
+              <span class="chip">GitHub</span>
+              <span class="chip">Docker</span>
+              <span class="chip">CI/CD</span>
+              <span class="chip">Vercel</span>
+              <span class="chip">Render</span>
+              <span class="chip">Hostinger</span>
+              <span class="chip">Postman</span>
+              <span class="chip">Jira</span>
+              <span class="chip">Bitbucket</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ EXPERIENCE ══ -->
+  <section id="experience">
+    <div class="wrap">
+      <div class="sec-tag">02 / Experience</div>
+      <h2 class="sec-title">Where I've Worked</h2>
+      <p class="sec-sub">Professional experience building production-grade software across enterprise and startup environments.</p>
+
+      <div class="tl">
+        <!-- IT WorldTech -->
+        <div class="tl-item fade-up">
+          <div class="tl-head">
+            <div>
+              <div class="tl-role">Full Stack Web Developer</div>
+              <div class="tl-co">IT WorldTech</div>
+              <div class="tl-dt">Jan 2026 – Present · Remote</div>
+            </div>
+            <span class="tl-tag current">● Current</span>
+          </div>
+          <div class="tl-pts">
+            <div class="tl-pt">Built and shipped 3+ production web platforms (company site, astrology app, marketing site) using React, Next.js, and Node.js, with bilingual UI, responsive design, and secure REST APIs.</div>
+            <div class="tl-pt">Developed a full-featured admin portal with JWT auth, 20+ REST endpoints, Stripe payments, real-time chat (Socket.io), and AI-powered features (Gemini API PDF reports) for a live astrology platform on the Play Store.</div>
+            <div class="tl-pt">Hardened backend infrastructure against common attack vectors (XSS, brute-force, injection) using Helmet.js and express-rate-limit, and automated the full release pipeline via GitHub Actions to Hostinger.</div>
+            <div class="tl-pt">Building a serverless file-sharing platform (Supabase, Cloudflare R2) with OTP/2FA auth, tiered subscription plans, and a redesigned presigned URL upload flow.</div>
+          </div>
+        </div>
+
+        <!-- Syngenta -->
+        <div class="tl-item fade-up">
+          <div class="tl-head">
+            <div>
+              <div class="tl-role">Software Developer Intern</div>
+              <div class="tl-co">Syngenta Group</div>
+              <div class="tl-dt">Jan 2025 – Aug 2025 · Pune, Maharashtra</div>
+            </div>
+            <span class="tl-tag intern">Internship</span>
+          </div>
+          <div class="tl-pts">
+            <div class="tl-pt">Diagnosed and resolved production-impacting bugs across MERN stack modules, tracing root causes through agile sprint cycles to improve platform stability.</div>
+            <div class="tl-pt">Achieved 80%+ unit test coverage across core modules and shipped features for a React Native mobile app, strengthening reliability across web and mobile platforms.</div>
+            <div class="tl-pt">Drove code quality through peer reviews and agile collaboration, managing sprint workflows via Jira and version control via Bitbucket in a cross-functional team.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ PROJECTS ══ -->
+  <section id="projects">
+    <div class="wrap">
+      <div class="sec-tag">03 / Projects</div>
+      <h2 class="sec-title">What I've Built</h2>
+      <p class="sec-sub">A selection of full-stack projects showcasing AI integrations, real-time data, and production-ready architecture.</p>
+
+      <div class="proj-grid">
+
+        <!-- AgroPrice Pro -->
+        <div class="proj-card fade-up">
+          <div class="proj-top">
+            <div class="proj-icon" style="background:rgba(99,102,241,0.1);">🌾</div>
+            <div class="proj-actions">
+              <a href="https://agroprice-pro.vercel.app/" class="proj-btn" title="Live Demo">↗</a>
+              <a href="https://github.com/Pushkar012345/agroprice-pro" class="proj-btn" title="GitHub">⎔</a>
+            </div>
+          </div>
+          <div class="proj-title">AgroPrice Pro</div>
+          <div class="proj-desc">
+            Agricultural market price tracker covering 255+ markets across 12 Maharashtra districts. Features AgroBot AI chatbot via Groq LLaMA for real-time price queries and farming advice. Includes price charts, crop comparison, alert simulator, CSV export, and dark/light mode.
+          </div>
+          <div class="proj-chips">
+            <span class="tc">React.js</span>
+            <span class="tc">Node.js</span>
+            <span class="tc">Express.js</span>
+            <span class="tc">PostgreSQL</span>
+            <span class="tc">Prisma ORM</span>
+            <span class="tc">Groq AI</span>
+          </div>
+        </div>
+
+        <!-- Lumina AI -->
+        <div class="proj-card fade-up">
+          <div class="proj-top">
+            <div class="proj-icon" style="background:rgba(45,212,191,0.1);">✨</div>
+            <div class="proj-actions">
+              <a href="https://lumina-frontend-ten.vercel.app/" class="proj-btn" title="Live Demo">↗</a>
+              <a href="https://github.com/Pushkar012345/lumina-backend" class="proj-btn" title="GitHub">⎔</a>
+            </div>
+          </div>
+          <div class="proj-title">Lumina AI — Study Guide Generator</div>
+          <div class="proj-desc">
+            AI-powered study platform generating summaries, flashcards, and quizzes via Groq LLaMA. Integrates Clerk authentication with per-user study history in MongoDB. Implements rate limiting, Helmet.js security headers, CORS, PDF export, dark mode, and full mobile support.
+          </div>
+          <div class="proj-chips">
+            <span class="tc">React.js</span>
+            <span class="tc">Node.js</span>
+            <span class="tc">MongoDB</span>
+            <span class="tc">Groq API</span>
+            <span class="tc">Clerk Auth</span>
+            <span class="tc">Helmet.js</span>
+          </div>
+        </div>
+
+        <!-- DevDash -->
+        <div class="proj-card fade-up">
+          <div class="proj-top">
+            <div class="proj-icon" style="background:rgba(251,191,36,0.1);">📊</div>
+            <div class="proj-actions">
+              <a href="https://dev-analytics-dashboard-olive.vercel.app/" class="proj-btn" title="Live Demo">↗</a>
+              <a href="https://github.com/Pushkar012345/dev-analytics-dashboard" class="proj-btn" title="GitHub">⎔</a>
+            </div>
+          </div>
+          <div class="proj-title">DevDash — GitHub Analytics Dashboard</div>
+          <div class="proj-desc">
+            GitHub analytics dashboard built with Next.js 16 and TypeScript, deployed on Vercel. Uses GitHub OAuth via NextAuth.js to fetch profile data from the GitHub REST API. Features day-of-week breakdowns, language pie charts via Recharts, and Supabase for user preferences.
+          </div>
+          <div class="proj-chips">
+            <span class="tc">Next.js 16</span>
+            <span class="tc">TypeScript</span>
+            <span class="tc">Supabase</span>
+            <span class="tc">NextAuth.js</span>
+            <span class="tc">Recharts</span>
+            <span class="tc">TanStack Query</span>
+          </div>
+        </div>
+
+        <!-- More on GitHub -->
+        <div class="proj-card proj-more fade-up">
+          <div class="arrow">→</div>
+          <div class="proj-title">More on GitHub</div>
+          <div class="proj-desc">MI Clone, Kokan Restaurant Website, Portfolio &amp; more</div>
+          <a href="https://github.com/Pushkar012345" target="_blank" class="btn-ghost" style="font-size:0.82rem;padding:0.5rem 1.3rem;">View All →</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ EDUCATION ══ -->
+  <section id="education">
+    <div class="wrap">
+      <div class="sec-tag">04 / Education</div>
+      <h2 class="sec-title">Academic Background</h2>
+      <p class="sec-sub">Formal education in Information Technology from Vishwakarma Institute of Information Technology, Pune.</p>
+
+      <div class="edu-grid">
+        <div class="edu-card fade-up">
+          <div class="edu-yr">2021 – 2025</div>
+          <div class="edu-deg">B.Tech — Information Technology Engineering</div>
+          <div class="edu-school">Vishwakarma Institute of Information Technology (VIIT), Pune</div>
+          <div class="edu-grade">CGPA: 8.37 / 10</div>
+        </div>
+        <div class="edu-card fade-up">
+          <div class="edu-yr">2019 – 2021</div>
+          <div class="edu-deg">HSC — XIIth (Science)</div>
+          <div class="edu-school">Dnyandeep Vidya Mandir, Ratnagiri</div>
+          <div class="edu-grade">Percentage: 94.33%</div>
+        </div>
+        <div class="edu-card fade-up">
+          <div class="edu-yr">2017 – 2019</div>
+          <div class="edu-deg">SSC — Xth</div>
+          <div class="edu-school">Navbharat Highschool, Ratnagiri</div>
+          <div class="edu-grade">Percentage: 90.20%</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ CONTACT ══ -->
+  <section id="contact">
+    <div class="wrap">
+      <div class="sec-tag">05 / Contact</div>
+      <h2 class="sec-title">Get In Touch</h2>
+
+      <div class="contact-grid">
+        <div class="fade-up">
+          <div class="c-item">
+            <div class="c-icon">📍</div>
+            <div>
+              <div class="c-lbl">Location</div>
+              <div class="c-val">Pune, Maharashtra, India</div>
+            </div>
+          </div>
+          <div class="c-item">
+            <div class="c-icon">📧</div>
+            <div>
+              <div class="c-lbl">Email</div>
+              <div class="c-val"><a href="mailto:pushkarpawaroff@gmail.com">pushkarpawaroff@gmail.com</a></div>
+            </div>
+          </div>
+          <div class="c-item">
+            <div class="c-icon">📞</div>
+            <div>
+              <div class="c-lbl">Phone</div>
+              <div class="c-val"><a href="tel:+918482939096">+91 8482939096</a></div>
+            </div>
+          </div>
+          <div class="social-row">
+            <a href="https://www.linkedin.com/in/pushkar-pawar-30895825b/" class="soc-btn" target="_blank">🔗 LinkedIn</a>
+            <a href="https://github.com/Pushkar012345" class="soc-btn" target="_blank">🐙 GitHub</a>
+            <a href="https://pushkar012345.github.io/" class="soc-btn" target="_blank">🌐 Portfolio</a>
+            <a href="https://leetcode.com/u/pushkarpawar/" class="soc-btn" target="_blank">💻 LeetCode</a>
+          </div>
+        </div>
+
+        <div class="cta-box fade-up">
+          <h3>Open to New Opportunities</h3>
+          <p>Whether it's a full-time role, freelance project, or just a technical conversation — I'd love to connect. I'm especially interested in roles involving full-stack development, AI integrations, or founding-engineer opportunities.</p>
+          <div class="cta-stack">
+            <a href="https://drive.google.com/file/d/15AdDJdfR9Ta8nacxIzHsAdpWShY-yjQk/view?usp=sharing"
+               class="btn-primary" target="_blank">↓ Download Resume</a>
+            <a href="https://www.linkedin.com/in/pushkar-pawar-30895825b/"
+               class="btn-ghost" target="_blank">Connect on LinkedIn →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ FOOTER ══ -->
+  <footer>
+    <span>© <span id="yr"></span> Pushkar Pawar</span>
+    <span>Built with HTML · CSS · JS</span>
+  </footer>
+
+  <script>
+    /* ── Year ── */
+    document.getElementById('yr').textContent = new Date().getFullYear();
+
+    /* ── Navbar shrink on scroll ── */
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => nav.classList.toggle('shrunk', scrollY > 50));
+
+    /* ── Mobile menu ── */
+    document.getElementById('hbg').onclick    = () => document.getElementById('mobMenu').classList.add('open');
+    document.getElementById('mobClose').onclick = closeMob;
+    function closeMob() { document.getElementById('mobMenu').classList.remove('open'); }
+
+    /* ── Typing animation ── */
+    const roles = ['Full Stack Developer', 'MERN Stack Engineer', 'AI Integration Builder', 'Next.js Developer'];
+    let ri = 0, ci = 0, del = false;
+    const el = document.getElementById('typing');
+    function type() {
+      const w = roles[ri];
+      if (!del) {
+        el.textContent = w.slice(0, ++ci);
+        if (ci === w.length) { del = true; return setTimeout(type, 1800); }
+      } else {
+        el.textContent = w.slice(0, --ci);
+        if (ci === 0) { del = false; ri = (ri + 1) % roles.length; }
+      }
+      setTimeout(type, del ? 45 : 85);
+    }
+    type();
+
+    /* ── Scroll fade-in ── */
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+  </script>
 </body>
-
 </html>
